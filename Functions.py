@@ -66,25 +66,42 @@ def calculationInOrderToPostOrder(expression):
     while stack!=[]:
         result.append(stack.pop())
     return result
-def PostOrderExchangePreOrder(expression):
-    if len(expression)<=1:
-        return expression
-    pos=0
-    length=len(expression)
-    while pos<length//2:
-        expression[pos],expression[length-1-pos]=expression[length-1-pos],expression[pos]
-        pos+=1
-    return expression
 
-#note the expression should be preorder, if not, use upper functions to convert
+def preOrderBuildTree(expression):
+    depth=math.ceil(math.log(len(expression),2))
+    layer=1
+    root=TreeNode(expression[0])
+    node=root
+    for e in expression[1:]:
+        tree=TreeNode(e)
+        while 1:
+            if not node.leftchild and layer<depth:
+                node.leftchild=tree
+                tree.parent=node
+                node=tree
+                layer+=1
+                break
+            elif not node.rightchild and layer<depth:
+                node.rightchild = tree
+                tree.parent = node
+                node = tree
+                layer += 1
+                break
+            else:
+                node=node.parent
+                layer-=1
+    return root
+
+
+#note the expression should be postorder, if not, use upper functions to convert
 def buildTree(expression):
     stack=[]
     for e in expression:
         if type(e)==int or e.isdigit():
             stack.append(TreeNode(e))
         elif e in ['+','*','/','-']:
-            left=stack.pop()
             right=stack.pop()
+            left=stack.pop()
             operation=TreeNode(e,left,right)
             left.parent=operation
             right.parent=operation
@@ -124,4 +141,5 @@ def postOrderShowTree(node):
         output += str(node.element)
     return output
 print(postOrderShowTree(buildTree(calculationInOrderToPostOrder('(4 + 2) * (5 - 3)'))))
+print(postOrderShowTree(preOrderBuildTree('*+42-53')))
 
