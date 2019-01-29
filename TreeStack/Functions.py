@@ -140,6 +140,16 @@ def postOrderShowTree(node):
         output += postOrderShowTree(node.rightchild)
         output += str(node.element)
     return output
+
+def inorder(node):
+    if node:
+        str=inorder(node.leftchild)
+        str+=node.element
+        str+=inorder(node.rightchild)
+        return str
+    else:
+        return ''
 print(postOrderShowTree(buildTree(calculationInOrderToPostOrder('(4 + 2) * (5 - 3)'))))
-print(postOrderShowTree(preOrderBuildTree('*+42-53')))
+print(inOrderShowTree(preOrderBuildTree('*+42-53')))
+
 
