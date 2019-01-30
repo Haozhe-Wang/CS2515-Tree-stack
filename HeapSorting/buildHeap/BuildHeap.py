@@ -1,22 +1,23 @@
 #Build this heap by building from the bottom to the top
 def upHeap(lst):
-    index=len(lst)-1-(len(lst)//2)
+    num=len(lst)
+    index=num-1-(num//2)
     leftchild=index*2+1
     rightchild=index*2+2
     i=index
     while i>=0 :
-        while  leftchild<len(lst) and lst[leftchild]>lst[index] or rightchild<len(lst) and lst[rightchild]>lst[index]:
+        while  leftchild<num:
             #if rightchild have value greater than leftchild, and greater than the current value
-            if leftchild<len(lst) and rightchild<len(lst) and lst[rightchild]>lst[leftchild] and lst[rightchild]>lst[index]:
+            if rightchild<num and lst[rightchild]>lst[leftchild] and lst[rightchild]>lst[index]:
                 lst[index],lst[rightchild]=lst[rightchild],lst[index]
                 index = rightchild
             #if there is leftchild and has value greater than current value
-            elif leftchild<len(lst) and lst[leftchild]>lst[index]:
+            elif lst[leftchild]>lst[index]:
                 lst[index], lst[leftchild] = lst[leftchild], lst[index]
                 index = leftchild
             else:
-                lst[index], lst[rightchild] = lst[rightchild], lst[index]
-                index = rightchild
+                break
+
             #update the leftchild and rightchild
             leftchild = index * 2 + 1
             rightchild = index * 2 + 2
