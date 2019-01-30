@@ -5,16 +5,23 @@ def upHeap(lst):
     leftchild=index*2+1
     rightchild=index*2+2
     i=index
+
+    #This will record number of steps of swaps
+    times=0
     while i>=0 :
         while  leftchild<num:
             #if rightchild have value greater than leftchild, and greater than the current value
             if rightchild<num and lst[rightchild]>lst[leftchild] and lst[rightchild]>lst[index]:
                 lst[index],lst[rightchild]=lst[rightchild],lst[index]
                 index = rightchild
+
+                times+=1
             #if there is leftchild and has value greater than current value
             elif lst[leftchild]>lst[index]:
                 lst[index], lst[leftchild] = lst[leftchild], lst[index]
                 index = leftchild
+
+                times+=1
             else:
                 break
 
@@ -27,11 +34,15 @@ def upHeap(lst):
         index=i
         leftchild = index * 2 + 1
         rightchild = index * 2 + 2
+    print(times)
     return lst
 
 #build this heap by building from top to the bottom
 def downHeap(lst):
     i=1
+
+    # This will record number of steps of swaps
+    times=0
     while i<len(lst):
         index=i
         parent=(index-1)//2
@@ -39,7 +50,10 @@ def downHeap(lst):
             lst[parent],lst[index]=lst[index],lst[parent]
             index=parent
             parent=(index-1)//2
+
+            times+=1
         i+=1
+    print(times)
     return lst
 def generateList(n):
     from random import shuffle
@@ -75,3 +89,14 @@ def Heaptest(n,number):
 
 Heaptest(1000000,20)
 # print(upHeap([2,1,4,6,6,6,8,4,4,24]))
+
+#Below will generate the worst case of each algorithm, We can see The second version 'downHeap' growth dramatically
+print('-'*100)
+print('worst case seen below')
+iterations=1000000
+lst=[None]*iterations
+for i in range(iterations):
+    lst[i]=i
+lst2=lst.copy()
+upHeap(lst)
+downHeap(lst2)
