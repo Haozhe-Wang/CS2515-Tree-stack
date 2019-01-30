@@ -98,5 +98,5 @@ lst=[None]*iterations
 for i in range(iterations):
     lst[i]=i
 lst2=lst.copy()
-upHeap(lst)
-downHeap(lst2)
+upHeap(lst) #999988 steps of swaps
+downHeap(lst2) #17951445 steps of swaps
