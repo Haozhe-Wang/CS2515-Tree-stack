@@ -68,7 +68,7 @@ def Heaptest(n,number):
         total_down += perf_counter() - start
 
 
-    print('bubble up heap average: %f'%(total_up/number)) #time 0.963352
+    print('bubble up heap average: %f'%(total_up/number)) #time 0.632240
 
     print('bubble down heap average: %f' % (total_down / number)) #time 0.731332
 
