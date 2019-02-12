@@ -1,0 +1,201 @@
+#Name: Haozhe Wang  Student NO: 117101193
+class Queue():
+    def __init__():
+        self._queue=[]
+    
+    def enqueue(process):
+        append process to the end of the queue
+
+    def dequeue():
+         if there is process in the Queue
+            remove the first process of the queue and return the process
+    
+    def length():
+        return the queue's length
+    def first():
+        return the first process of the queue
+'
+class IOoperation():
+    def __init__(self,IO_startTime,IO_timeSpan):
+        self._IO_startTime = IO_startTime
+        self._IO_timeSpan = IO_timeSpan
+    def getIO_startTime(self):
+        return IO startTime
+    def setIO_startTime(self,IO_startTime):
+        set instance IO_startTime to IO_startTime
+    def getIO_timeSpan(self):
+        return  IO timeSpan
+    def setIO_timeSpan(self,IO_timeSpan):
+        set instance IO_timeSpan to IO_timeSpan
+
+class Process():
+    //define state varaible
+    READY='ready'
+    BLOCKED='blocked'
+    RUNNING='running'
+    CREATED='created'
+    TERMINATED='terminated
+    def __init__():
+        self._name=''
+        self._state=CREATED
+        //required timeslices of the process
+        self._timeRequired=0
+        self._IO=IOoperation()
+    
+    def changeState(state):
+        change the instance state to state
+    def decreamentTime():
+        deduct 1 from the process' required time slice
+    def decreamentBlockTime(t):
+        deduct t from the process' block time span
+
+    def ifFinish():
+        if time required is 0:
+            return True
+        else:
+            return False
+    def ifIOStart():
+        if IO start time is reached
+            return True
+        else:
+            return false
+    def resetIO():
+        change IO_startTime to None indicates IO finish
+    def getIOSpan():
+        return IO_timeSpan value
+    def getName():
+        return the process name
+
+class Stack():
+    def __init__():
+        self._stack=[]
+    def push(process):
+        append process to the stack
+    def pop():
+        if stack length not equal to 0:
+            pop the process from the stack and return the value
+    def length():
+        return the number of elements of the stack
+    def top(self):
+        if stack length not equal to 0:
+            return the last element of the stack
+
+class Interrupt():
+    def __init__(self):
+        self._interruptValue=get random number of 1 to 10
+    def ifInterrupt(self,value):
+        if interruptValue equals some value :
+            return True
+        return False
+    def initInterrupt(self):
+        generate new random number for interruptValue
+    def runInterruptHandler(self):
+        run interrupt handler function
+class IdleProcess():
+    def __init__(self):
+        self._process='Idle Process'
+    def runIdleProcess(self):
+        run Idle Process and sleep the system(change the power on state)
+
+class Scheduler():
+    def __init__():
+        initialize scheduler
+
+        self._readyQueue=Queue()
+        self._blockedQueue=Queue()
+        self._interruptedStack=Stack()
+        //assume this attribute represents the system is on
+        self._powerOn=True
+        //this attribute indicates the process running in the cpu
+        self._cpu=None
+        self._interrupt=Interrupt()
+        self._idleProcess=IdleProcess()
+    
+    
+    def createProcess(timeRequired,IO_startTime=None,IO_timeSpan=0):
+        create a new process instance and pass arguments in the process(set the instance IO_startTime = timeRequired-IO_startTime )
+        call addReadyProcess(process)
+
+    def powerOFF():
+        change the powerOn state to False
+    
+    def addReadyProcess(process):
+        add process to ready queue
+        change the process state to ready state
+
+    def addBlockedProcess():
+        remember and take the process out of the cpu(call preempt function)
+        add process to blocked queue
+        change process to blocked state
+    def addSuspended():
+        remember and take the process out of the cpu(call preempt function)
+        add the process to interrupt stack
+        run interrupt handler(change the cpu to interrupt handler process and print running interrupt handler)
+        pop the interrupt stack
+        resume the process(call run process function)
+
+    def runProcess():
+        if there is process in the interrupt stack:
+            change cpu attribute to the process
+        else if ready queue is not empty:
+            dequeue a process from ready queue
+            change the process state to running
+            change the cpu to this process
+        else if ready queue is empty but there is process in block queue:
+            run idle process to wait process in block queue finish
+        else:
+            run idle process(print running idle process and change cpu to 'idle process')
+            change the powerOn state to False so that the system can sleep
+    def preemptProcess():
+        change cpu attribute to None
+        return the preempted process
+    def checkBlockedQueue(t):
+        if there is process in blocked queue
+            decrement t to first process of the block queue
+            if the process IO_timeSpan less than 0:
+                take the process out of the block queue
+                add it to the ready queue (call function add ready process)
+    def schedule():
+        while ready queue is not empty or block queue is not empty:
+            call the function to run process( if ready queue is empty but block queue is not empty, run idle process)
+            for 3 time slice of one time quanta
+                decreament 1 timeslice for the first process of block queue
+                if process in the cpu is not idle process:
+                    if process requires I/O:
+                        call add blocked process function
+                        break
+                    init interruption
+                    if process are interrupted:
+                        call add suspended function
+
+                    process in the cpu decreament 1 time slice
+
+                    if process is not finished and time quanta ends:
+                        call preempt process function
+                        add process to ready queue
+                    elif process execution completes:
+                        preempt process from cpu
+                        set the process state to TERMINATED
+                        break
+        call runProcess to run idle process in order to powerOFF function to sleep the system
+    def getSchedulerState():
+        return if scheduler is running or powered off
+class Test():
+    def __init__():
+        create Scheduler instance
+        create processes(call method)
+        run processes ( call method )
+    def createProcess(self):
+        create 4 processes with different time slices and IO requirements
+    def runProcess(self):
+        while Scheduler powerOn is True:
+            execute Scheduler schedule method
+
+
+
+        
+        
+
+
+
+    
